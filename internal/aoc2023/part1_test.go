@@ -8,7 +8,7 @@ import (
 
 func TestDay1Part1(t *testing.T) {
 	d1 := Day1{}
-	want := 0
+	want := 142
 	got := d1.Part1(d1SampleInput)
 	assert.Equal(t, want, got)
 }
