@@ -1,0 +1,19 @@
+name: Build And Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5.0.2
+        with:
+          go-version: 1.22.5
+
+      - name: Advent Tests
+        run: go test -v ./...
