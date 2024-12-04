@@ -1,6 +1,7 @@
 package aocutils
 
 import (
+	_ "embed"
 	"fmt"
 	"testing"
 
@@ -17,5 +18,15 @@ func TestWindowExact(t *testing.T) {
 		hitCount += 1
 	})
 	assert.Equal(t, 7, hitCount)
+
+}
+
+//go:embed testdata/samplegrid.txt
+var sampleInput []byte
+
+func TestRuneGrid(t *testing.T) {
+	grid := ParseAsRuneGrid(sampleInput)
+	fmt.Println(grid)
+	assert.Equal(t, 10, len(grid))
 
 }

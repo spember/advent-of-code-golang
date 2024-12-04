@@ -14,6 +14,24 @@ func ParseLines(fileData []byte) []string {
 	return lines
 }
 
+func ParseToStringGrid(fileData []byte) [][]string {
+	lines := ParseLines(fileData)
+	grid := make([][]string, len(lines))
+	for i, line := range lines {
+		grid[i] = strings.Split(line, "")
+	}
+	return grid
+}
+
+func ParseAsRuneGrid(fileData []byte) [][]rune {
+	lines := ParseLines(fileData)
+	grid := make([][]rune, len(lines))
+	for i, line := range lines {
+		grid[i] = []rune(line)
+	}
+	return grid
+}
+
 func ParseChunks(fileData []byte) [][]string {
 	// convert to string
 	lines := ParseLines(fileData)
