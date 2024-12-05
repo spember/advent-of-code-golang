@@ -1,6 +1,8 @@
 package aocutils
 
-import "strings"
+import (
+	"strings"
+)
 
 func ParseLines(fileData []byte) []string {
 	// convert to string
@@ -39,12 +41,14 @@ func ParseChunks(fileData []byte) [][]string {
 	chunks := make([][]string, 0)
 	chunk := make([]string, 0)
 	for _, line := range lines {
-		if line == "" {
+		if line == "" || line == "\n" {
 			chunks = append(chunks, chunk)
 			chunk = make([]string, 0)
 		} else {
 			chunk = append(chunk, line)
 		}
 	}
+	// make sure to get the last chunk
+	chunks = append(chunks, chunk)
 	return chunks
 }
