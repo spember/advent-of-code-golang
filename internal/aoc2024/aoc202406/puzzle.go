@@ -144,7 +144,7 @@ func Part1(input []byte) int {
 	var placesWithDirection = make(map[[3]int]bool)
 	places[guard.Position] = true
 	placesWithDirection[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}] = true
-
+	var loopHits = 0
 	for {
 		placesWithDirection[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}] = true
 		// check if we're at the end
@@ -158,23 +158,56 @@ func Part1(input []byte) int {
 
 		if guard.CheckInFront(grid) {
 			guard.TurnRight()
+			placesWithDirection[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}] = true
 
 		}
 		// move forward
 		guard.StepForward()
 		steps++
 		places[guard.Position] = true
+		placesWithDirection[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}] = true
 
 		// turn right and step forward, if new position is in places With Direction, yay! we found a loop
 		// then step backward and turn left
 		guard.TurnRight()
 
-		_, b := placesWithDirection[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}]
+		b := isLoopAhead(grid, placesWithDirection, guard)
 		guard.TurnLeft()
 		if b {
 			fmt.Println("Found a loop at ", guard.Position[0]+guard.DirectionRow, guard.Position[1]+guard.DirectionCol)
+			loopHits += 1
 		}
 
 	}
+	fmt.Println("Loop hits: ", loopHits)
 	return len(places)
+}
+
+func isLoopAhead(grid [][]string, history map[[3]int]bool, guard *Guard) bool {
+	// simulate moving forward until you hit an obstacle, the edge of the map, or hit placesWithDirection
+	// if we do hit Places with Direction, then we've found a loop
+	var hasLoop = false
+	nextPos := [2]int{guard.Position[0], guard.Position[1]}
+	for {
+
+		//fmt.Println("Next pos is ", nextPos)
+		if nextPos[0] < 0 || nextPos[1] < 0 || nextPos[0] >= len(grid) || nextPos[1] >= len(grid[0]) {
+			//fmt.Println("edge hit")
+			break
+		}
+		if grid[nextPos[0]][nextPos[1]] == obstacle {
+			//fmt.Println("obstacle hit")
+			break
+		}
+		if _, ok := history[[3]int{nextPos[0], nextPos[1], int(guard.Direction[0])}]; ok {
+			//fmt.Println("loop hit")
+			hasLoop = true
+			break
+		}
+		nextPos[0] += guard.DirectionRow
+		nextPos[1] += guard.DirectionCol
+
+	}
+	//_, b := history[[3]int{guard.Position[0], guard.Position[1], int(guard.Direction[0])}]
+	return hasLoop
 }
