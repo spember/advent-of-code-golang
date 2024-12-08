@@ -54,7 +54,6 @@ func Part2(input []byte) int64 {
 		// recursively build equations, for each possible operand
 		var equations = &Equations{Target: left, Holding: [][]string{}}
 		buildEquation(equations, []string{fmt.Sprintf("%d", right[0])}, right[1:])
-
 		for _, equation := range equations.Holding {
 			result := solveEquation(equation)
 			if result == left {

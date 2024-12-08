@@ -15,3 +15,7 @@ func FindNextDiagonalSteps[T any](grid [][]T, x, y int) [][]int {
 
 	return steps
 }
+
+func IsOnGrid[T any](grid [][]T, x, y int) bool {
+	return x >= 0 && y >= 0 && x < len(grid) && y < len(grid[0])
+}

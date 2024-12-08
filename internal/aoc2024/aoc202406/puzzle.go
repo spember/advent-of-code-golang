@@ -189,9 +189,8 @@ func isLoopAhead(grid [][]string, history map[[3]int]bool, guard *Guard) bool {
 	var hasLoop = false
 	nextPos := [2]int{guard.Position[0], guard.Position[1]}
 	for {
-
-		//fmt.Println("Next pos is ", nextPos)
-		if nextPos[0] < 0 || nextPos[1] < 0 || nextPos[0] >= len(grid) || nextPos[1] >= len(grid[0]) {
+		
+		if !aocutils.IsOnGrid(grid, nextPos[0], nextPos[1]) {
 			//fmt.Println("edge hit")
 			break
 		}
