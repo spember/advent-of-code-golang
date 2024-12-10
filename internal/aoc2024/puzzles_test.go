@@ -48,3 +48,19 @@ func TestDay9P2(t *testing.T) {
 	// tried 6522525986866 which is not correct
 	assert.Equal(t, 6522525986866, Day9Part2(day9Input))
 }
+
+//go:embed testdata/day10-sample.txt
+var day10sample []byte
+
+//go:embed testdata/day10.txt
+var day10Input []byte
+
+func TestDay10(t *testing.T) {
+	score, rating := Day10(day10sample)
+	assert.Equal(t, 36, score)
+	assert.Equal(t, 81, rating)
+
+	score, rating = Day10(day10Input)
+	assert.Equal(t, 550, score)
+	assert.Equal(t, 1255, rating)
+}

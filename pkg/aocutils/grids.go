@@ -16,6 +16,25 @@ func FindNextDiagonalSteps[T any](grid [][]T, x, y int) [][]int {
 	return steps
 }
 
+func FindNextOrthogonalSteps[T any](grid [][]T, row, cell int) [][2]int {
+	steps := make([][2]int, 0, 4)
+
+	if IsOnGrid(grid, row-1, cell) {
+		steps = append(steps, [2]int{row - 1, cell})
+	}
+	if IsOnGrid(grid, row+1, cell) {
+		steps = append(steps, [2]int{row + 1, cell})
+	}
+	if IsOnGrid(grid, row, cell-1) {
+		steps = append(steps, [2]int{row, cell - 1})
+	}
+	if IsOnGrid(grid, row, cell+1) {
+		steps = append(steps, [2]int{row, cell + 1})
+	}
+
+	return steps
+}
+
 func IsOnGrid[T any](grid [][]T, x, y int) bool {
 	return x >= 0 && y >= 0 && x < len(grid) && y < len(grid[0])
 }

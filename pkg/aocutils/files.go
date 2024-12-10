@@ -25,6 +25,15 @@ func ParseToStringGrid(fileData []byte) [][]string {
 	return grid
 }
 
+func ParseToIntGrid(fileData []byte) [][]int {
+	lines := ParseLines(fileData)
+	grid := make([][]int, len(lines))
+	for i, line := range lines {
+		grid[i] = Map(strings.Split(line, ""), IntOrPanic)
+	}
+	return grid
+}
+
 func ParseAsRuneGrid(fileData []byte) [][]rune {
 	lines := ParseLines(fileData)
 	grid := make([][]rune, len(lines))
