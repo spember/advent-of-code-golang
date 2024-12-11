@@ -64,3 +64,15 @@ func TestDay10(t *testing.T) {
 	assert.Equal(t, 550, score)
 	assert.Equal(t, 1255, rating)
 }
+
+var day11Sample = "125 17"
+var day11Input = "0 5601550 3914 852 50706 68 6 645371"
+
+func TestDay11Part1(t *testing.T) {
+
+	assert.Equal(t, 22, Day11Part1(day11Sample, 6))
+	assert.Equal(t, 55312, Day11Part1(day11Sample, 25))
+	assert.Equal(t, 189092, Day11Part1(day11Input, 25))
+
+	//assert.Equal(t, 189092, Day11Part1(day11Input, 75))
+}
