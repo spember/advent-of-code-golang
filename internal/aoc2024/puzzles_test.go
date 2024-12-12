@@ -76,3 +76,30 @@ func TestDay11Part1(t *testing.T) {
 
 	//assert.Equal(t, 189092, Day11Part1(day11Input, 75))
 }
+
+//go:embed testdata/day12-trivial.txt
+var day12Trivial []byte
+
+//go:embed testdata/day12-harder.txt
+var day12Harder []byte
+
+//go:embed testdata/day12-more.txt
+var day12More []byte
+
+//go:embed testdata/day12.txt
+var day12 []byte
+
+func TestDay12Part1(t *testing.T) {
+	data := []string{"foo", "bar", "baz"}
+	assert.Equal(t, 3, len(data))
+
+	first, data := data[0], data[1:]
+	assert.Equal(t, 2, len(data))
+	assert.Equal(t, "foo", first)
+
+	assert.Equal(t, 140, Day12Part1(day12Trivial))
+	assert.Equal(t, 772, Day12Part1(day12Harder))
+	assert.Equal(t, 1930, Day12Part1(day12More))
+	// correct, but takes a minute
+	//assert.Equal(t, 1361494, Day12Part1(day12))
+}
