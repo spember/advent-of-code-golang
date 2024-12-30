@@ -112,6 +112,6 @@ func Day12Part1(input []byte) int {
 
 func Day12Part2(input []byte) int {
 	// same as part 1, but we need to check for "sides" of each Garden region. Grow check contiguous permimeter.
-	// No time today to do it.
+	// No time today to do it.`
 	return 0
 }

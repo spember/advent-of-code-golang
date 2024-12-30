@@ -103,3 +103,19 @@ func TestDay12Part1(t *testing.T) {
 	// correct, but takes a minute
 	//assert.Equal(t, 1361494, Day12Part1(day12))
 }
+
+//go:embed testdata/day13-sample.txt
+var day13Sample []byte
+
+//go:embed testdata/day13.txt
+var day13Input []byte
+
+func TestDay13Part1(t *testing.T) {
+	assert.Equal(t, 480, Day13Part1(day13Sample, false))
+	assert.Equal(t, 37128, Day13Part1(day13Input, false))
+}
+
+func TestDay13Part2(t *testing.T) {
+	assert.Equal(t, 875318608908, Day13Part1(day13Sample, true))
+	assert.Equal(t, 74914228471331, Day13Part1(day13Input, true))
+}
