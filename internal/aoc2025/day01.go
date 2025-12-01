@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/spember/advent-of-code-golang/pkg/aocutils"
 	"github.com/spember/advent-of-code-golang/pkg/aocutils/parseto"
+	"github.com/spember/advent-of-code-golang/pkg/aocutils/printer"
 )
 
 /*
@@ -37,7 +37,7 @@ func (s SecretEntrance) Part1(input []byte) int {
 			//fmt.Println("Turning left by ", amount)
 			currentPosition = s.turnDial(currentPosition - amount)
 		case "R":
-		
+
 			currentPosition = s.turnDial(currentPosition + amount)
 		}
 
@@ -74,8 +74,7 @@ func (s SecretEntrance) turnDial(amount int) int {
 
 }
 
-func (s SecretEntrance) Part2(input []byte) int {
-	lines := parseto.Lines(input)
+func (s SecretEntrance) Part2(lines []string) int {
 
 	var currentPosition int = 50
 	var stepClicks = 0
@@ -93,33 +92,54 @@ func (s SecretEntrance) Part2(input []byte) int {
 			amount = -(amount)
 		}
 
-		currentPosition, stepClicks = s.turnForClicks(currentPosition, amount)
-		fmt.Println("Setting new position to ", currentPosition, "with clicks = ", stepClicks)
+		currentPosition, stepClicks = s.turnForClicksBrute(currentPosition, amount)
+		printer.Ln("Setting new position to ", currentPosition, "with clicks = ", stepClicks)
 		zeroes += stepClicks
 	}
 
 	return zeroes
 }
 
-func (s SecretEntrance) turnForClicks(currentPosition int, amount int) (int, int) {
-	var clicks = aocutils.AbsInt(amount / 100)
-
-	if clicks > 0 {
-		fmt.Printf("Setting clicks %d due to magnitude of change %d \n", clicks, amount)
+func (s SecretEntrance) turnForClicksBrute(incomingPosition int, amount int) (int, int) {
+	clicks := 0
+	currentPosition := incomingPosition
+	// I am double counting somewhere
+	// if starting at 0, don't count when moving off. If ending at zero, don't  count the move off
+	// however, we do want to count
+	if amount > 0 {
+		// go up
+		printer.Ln("Going up by ", amount)
+		for i := 0; i < amount; i++ {
+			if currentPosition == 0 {
+				printer.Ln("We're moving off of zero!")
+				clicks++
+			}
+			currentPosition++
+			if currentPosition >= 100 {
+				currentPosition = 0
+			}
+		}
+	} else {
+		printer.Ln("Going down by ", amount, "from ", incomingPosition)
+		for i := amount; i < 0; i++ {
+			if currentPosition == 0 {
+				printer.Ln("We're moving off of zero!")
+				clicks++
+			}
+			currentPosition--
+			if currentPosition < 0 {
+				currentPosition = 99
+			}
+		}
 	}
-	smallAmount := amount % 100
 
-	nextPosition := currentPosition + smallAmount
-
-	if nextPosition < 0 {
-		clicks += 1
-		nextPosition = (nextPosition % 100) + 100
+	if incomingPosition == 0 {
+		clicks--
+	}
+	if currentPosition == 0 {
+		clicks++
 	}
 
-	if nextPosition > 99 {
-		clicks += 1
-		nextPosition = nextPosition % 100
-	}
-
-	return nextPosition, clicks
+	printer.Ln("Adjusted ", incomingPosition, "to be ", currentPosition)
+	return currentPosition, clicks
 }
