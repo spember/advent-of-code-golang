@@ -147,8 +147,8 @@ func TestDay03(t *testing.T) {
 	solver := &Lobby{}
 
 	t.Run("Part 1 - Solve", func(t *testing.T) {
-		assert.Equal(t, 357, solver.Part1(parseto.Lines(day03Sample)))
-		assert.Equal(t, 17346, solver.Part1(parseto.Lines(day03Input)))
+		assert.Equal(t, 357, solver.Part1(parseto.LineSeq(day03Sample)))
+		assert.Equal(t, 17346, solver.Part1(parseto.LineSeq(day03Input)))
 	})
 
 	type complexCase struct {
@@ -173,10 +173,10 @@ func TestDay03(t *testing.T) {
 	})
 
 	t.Run("P2 Solve", func(t *testing.T) {
-		assert.Equal(t, int64(3121910778619), solver.Part2(parseto.Lines(day03Sample)))
+		assert.Equal(t, int64(3121910778619), solver.Part2(parseto.LineSeq(day03Sample)))
 		printer.Disable()
 		defer printer.Enable()
-		assert.Equal(t, int64(172981362045136), solver.Part2(parseto.Lines(day03Input)))
+		assert.Equal(t, int64(172981362045136), solver.Part2(parseto.LineSeq(day03Input)))
 	})
 
 }

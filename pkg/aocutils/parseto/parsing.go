@@ -1,6 +1,7 @@
 package parseto
 
 import (
+	"iter"
 	"strings"
 
 	"github.com/spember/advent-of-code-golang/pkg/aocutils"
@@ -16,6 +17,28 @@ func Lines(fileData []byte) []string {
 		lines = lines[:len(lines)-1]
 	}
 	return lines
+}
+
+func LineSeqWithIndex(fileData []byte) iter.Seq2[int, string] {
+	lines := Lines(fileData)
+	return func(yield func(int, string) bool) {
+		for p, line := range lines {
+			if !yield(p, line) {
+				break
+			}
+		}
+	}
+}
+
+func LineSeq(fileData []byte) iter.Seq[string] {
+	lines := Lines(fileData)
+	return func(yield func(string) bool) {
+		for _, line := range lines {
+			if !yield(line) {
+				break
+			}
+		}
+	}
 }
 
 func Chunks(fileData []byte) [][]string {

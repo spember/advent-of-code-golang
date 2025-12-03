@@ -2,9 +2,11 @@ package aoc2025
 
 import (
 	"fmt"
+	"iter"
 	"strconv"
 
 	"github.com/spember/advent-of-code-golang/pkg/aocutils/printer"
+	"github.com/spember/advent-of-code-golang/pkg/aocutils/seqs"
 )
 
 /*
@@ -16,21 +18,25 @@ https://adventofcode.com/2025/day/3
 type Lobby struct {
 }
 
-func (l *Lobby) Part1(lines []string) int {
+func (l *Lobby) Part1(lines iter.Seq[string]) int {
 	return int(l.solve(lines, 2))
 }
 
-func (l *Lobby) Part2(lines []string) int64 {
+func (l *Lobby) Part2(lines iter.Seq[string]) int64 {
 	return int64(l.solve(lines, 12))
 }
 
-func (l *Lobby) solve(lines []string, digits int) int64 {
+func (l *Lobby) solve(lines iter.Seq[string], digits int) int64 {
 	var total int64 = 0
-	for _, line := range lines {
-		bank := l.convertTo(line)
-		jolts := l.FindMaxNJoltage(bank, digits)
-		printer.Ln("Found jolts ", jolts)
-		total += jolts
+
+	jolts := seqs.Map[[]int, int64](
+		seqs.Map[string, []int](lines, l.convertTo),
+		func(jolts []int) int64 {
+			return l.FindMaxNJoltage(jolts, digits)
+		})
+	for jolt := range jolts {
+		printer.Ln("Found jolts ", jolt)
+		total += jolt
 	}
 	return total
 }
