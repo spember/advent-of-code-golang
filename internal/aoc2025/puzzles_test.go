@@ -82,7 +82,7 @@ func TestDay01(t *testing.T) {
 		defer printer.Enable()
 		assert.Equal(t, 6, solver.Part2(parseto.Lines(day01Sample)))
 		assert.Equal(t, 6166, solver.Part2(parseto.Lines(day01Input1)))
-		
+
 	})
 }
 
@@ -133,6 +133,28 @@ func TestDay02(t *testing.T) {
 		printer.Disable()
 		defer printer.Enable()
 		assert.Equal(t, 65794984339, solver.Solve(solver.ParseLine(parseto.Lines(day02Input)[0]), false))
+	})
+
+}
+
+//go:embed testdata/day03_sample_1.txt
+var day03Sample []byte
+
+//go:embed testdata/day03_input_1.txt
+var day03Input []byte
+
+func TestDay03(t *testing.T) {
+	solver := &Lobby{}
+
+	t.Run("P1 Joltage func", func(t *testing.T) {
+
+		assert.Equal(t, 45, solver.P1Joltage([]int{1, 2, 3, 4, 5}))
+		assert.Equal(t, 98, solver.P1Joltage([]int{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1}))
+	})
+
+	t.Run("Part 1 - Solve", func(t *testing.T) {
+		assert.Equal(t, 357, solver.Part1(parseto.Lines(day03Sample)))
+		assert.Equal(t, 17346, solver.Part1(parseto.Lines(day03Input)))
 	})
 
 }
