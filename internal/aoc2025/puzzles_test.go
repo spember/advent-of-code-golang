@@ -146,15 +146,37 @@ var day03Input []byte
 func TestDay03(t *testing.T) {
 	solver := &Lobby{}
 
-	t.Run("P1 Joltage func", func(t *testing.T) {
-
-		assert.Equal(t, 45, solver.P1Joltage([]int{1, 2, 3, 4, 5}))
-		assert.Equal(t, 98, solver.P1Joltage([]int{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1}))
-	})
-
 	t.Run("Part 1 - Solve", func(t *testing.T) {
 		assert.Equal(t, 357, solver.Part1(parseto.Lines(day03Sample)))
 		assert.Equal(t, 17346, solver.Part1(parseto.Lines(day03Input)))
+	})
+
+	type complexCase struct {
+		Bank   []int
+		Digits int
+		Output int64
+	}
+
+	var cases = []complexCase{
+		{Bank: []int{1, 2, 3, 4, 5}, Digits: 2, Output: 45},
+		{Bank: []int{1, 2, 3, 4, 5}, Digits: 3, Output: 345},
+		{Bank: []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1}, Digits: 2, Output: 98},
+		{Bank: []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1}, Digits: 12, Output: 987654321111},
+	}
+
+	t.Run("TDD - N Joltage func", func(t *testing.T) {
+		for _, c := range cases {
+			t.Run(fmt.Sprintf("Testing %d should be %v", c.Digits, c.Output), func(t *testing.T) {
+				assert.Equal(t, c.Output, solver.FindMaxNJoltage(c.Bank, c.Digits))
+			})
+		}
+	})
+
+	t.Run("P2 Solve", func(t *testing.T) {
+		assert.Equal(t, int64(3121910778619), solver.Part2(parseto.Lines(day03Sample)))
+		printer.Disable()
+		defer printer.Enable()
+		assert.Equal(t, int64(172981362045136), solver.Part2(parseto.Lines(day03Input)))
 	})
 
 }
