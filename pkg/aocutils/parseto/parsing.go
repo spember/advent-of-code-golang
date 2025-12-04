@@ -81,7 +81,7 @@ func IntGrid(fileData []byte) [][]int {
 	})
 }
 
-func RuneGrid(fileData []byte, lineDelimiter string) [][]rune {
+func RuneGrid(fileData []byte) [][]rune {
 	return Grid[rune](fileData, func(s string) []rune {
 		return []rune(s)
 	})

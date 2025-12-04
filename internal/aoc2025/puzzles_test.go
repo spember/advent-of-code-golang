@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -179,4 +180,32 @@ func TestDay03(t *testing.T) {
 		assert.Equal(t, int64(172981362045136), solver.Part2(parseto.LineSeq(day03Input)))
 	})
 
+}
+
+//go:embed testdata/day04_sample_1.txt
+var day04Sample []byte
+
+//go:embed testdata/day04_input_1.txt
+var day04Input []byte
+
+func TestDay04(t *testing.T) {
+	solver := &PrintingDepartment{}
+
+	t.Run("Part 1 - Solve", func(t *testing.T) {
+		assert.Equal(t, 13, solver.SolveP1(parseto.StringGrid(day04Sample, "")))
+		assert.Equal(t, 1363, solver.SolveP1(parseto.StringGrid(day04Input, "")))
+	})
+
+	t.Run("Part 1 - Solve", func(t *testing.T) {
+		printer.Disable()
+		defer printer.Enable()
+
+		now := time.Now()
+		assert.Equal(t, 43, solver.SolveP2(parseto.StringGrid(day04Sample, "")))
+		fmt.Printf("P1 completed in %d ms\n", time.Since(now).Milliseconds())
+
+		now = time.Now()
+		assert.Equal(t, 8184, solver.SolveP2(parseto.StringGrid(day04Input, "")))
+		fmt.Printf("P2 completed in %d ms\n", time.Since(now).Milliseconds())
+	})
 }

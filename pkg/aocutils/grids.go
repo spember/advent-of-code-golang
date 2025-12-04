@@ -16,6 +16,17 @@ func FindNextDiagonalSteps[T any](grid [][]T, x, y int) [][]int {
 	return steps
 }
 
+func FindNextDiagonalStepsValid[T any](grid [][]T, x, y int) [][]int {
+	validSteps := make([][]int, 0)
+	steps := FindNextDiagonalSteps(grid, x, y)
+	for _, step := range steps {
+		if IsOnGrid(grid, step[0], step[1]) {
+			validSteps = append(validSteps, step)
+		}
+	}
+	return validSteps
+}
+
 func FindNextOrthogonalSteps[T any](grid [][]T, row, cell int) [][2]int {
 	steps := make([][2]int, 0, 4)
 
