@@ -209,3 +209,28 @@ func TestDay04(t *testing.T) {
 		fmt.Printf("P2 completed in %d ms\n", time.Since(now).Milliseconds())
 	})
 }
+
+//go:embed testdata/day05_sample_1.txt
+var day05Sample []byte
+
+//go:embed testdata/day05_input_1.txt
+var day05Input1 []byte
+
+func TestDay05(t *testing.T) {
+	solver := &Cafeteria{}
+
+	t.Run("Part 1 - Solve", func(t *testing.T) {
+		sampleChunks := parseto.Chunks(day05Sample)
+		assert.Equal(t, 3, solver.SolveP1(sampleChunks[0], sampleChunks[1]))
+		inputChunks := parseto.Chunks(day05Input1)
+		assert.Equal(t, 577, solver.SolveP1(inputChunks[0], inputChunks[1]))
+	})
+
+	t.Run("Part 2 - Solve", func(t *testing.T) {
+		sampleChunks := parseto.Chunks(day05Sample)
+		assert.Equal(t, 14, solver.SolveP2(sampleChunks[0]))
+
+		inputChunks := parseto.Chunks(day05Input1)
+		assert.Equal(t, 350513176552950, solver.SolveP2(inputChunks[0]))
+	})
+}
